@@ -27,17 +27,17 @@ def play_game(board, starting_player):
     if board[move] == ' ':
       board = board[:move] + player + board[move+1:]
       render_board(board)
-      if player == 'x': player = 'y'
-      else: player = 'x'
       i += 1
       if i >= 2: evaluate_game(board, player, i)
+      if player == 'x': player = 'o'
+      else: player = 'x'
     else:
       print('That move has already been played')
   else:
     render_board(board)
     print(status)
     play_again = input('Would you like to play again? Yes/No ')
-    if play_again == 'Yes':
+    if play_again.lower() == 'yes':
       status = 'playing'
       play_game(original_board, player)
     else:
@@ -49,31 +49,34 @@ def render_board(board):
 
 def evaluate_game(board, player, i):
   global status
+  print(player)
+  # print(board[1], board[1], board[1], player)
   # horizontal across
   if board[1] == player and board[3] == player and board[5] == player:
+    print('h1', board[1], board[1], board[1], player)
     status = player + ' wins!'
   elif board[13] == player and board[15] == player and board[17] == player:
-    print('h2')
+    print('h2', board[13], board[15], board[17], player)
     status = player + ' wins!'
   elif board[25] == player and board[27] == player and board[29] == player:
-    print('h3')
+    print('h3', board[25], board[27], board[29], player)
     status = player + ' wins!'
   # vertical across
   elif board[1] == player and board[13] == player and board[25] == player:
-    print('v1')
+    print('v1', board[1], board[13], board[25], player)
     status = player + ' wins!'
   elif board[3] == player and board[15] == player and board[27] == player:
-    print('v2')
+    print('v2', board[3], board[15], board[27], player)
     status = player + ' wins!'
   elif board[5] == player and board[17] == player and board[29] == player:
-    print('v3')
+    print('v3', board[5], board[17], board[29], player)
     status = player + ' wins!'
   # diagonal
   elif board[1] == player and board[15] == player and board[29] == player:
-    print('d1')
+    print('d1', board[1], board[15], board[29], player)
     status = player + ' wins!'
   elif board[5] == player and board[15] == player and board[25] == player:
-    print('d2')
+    print('d2', board[5], board[15], board[25], player)
     status = player + ' wins!'
   # tie
   elif status == 'playing' and i == 9:

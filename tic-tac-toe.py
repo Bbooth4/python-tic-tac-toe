@@ -5,6 +5,7 @@
 # Repeat c and d until the game has been won or tied.
 # Ask if players want to play again.
 
+original_board = '  | |  -----  | |  -----  | | '
 board = '  | |  -----  | |  -----  | | '
 
 status = 'playing'
@@ -16,6 +17,7 @@ switcher = {
 }
 
 def play_game(board, starting_player):
+  global status
   player = starting_player
   render_board(board)
   i = 0
@@ -33,7 +35,13 @@ def play_game(board, starting_player):
       print('That move has already been played')
   else:
     render_board(board)
-    return status
+    print(status)
+    play_again = input('Would you like to play again? Yes/No ')
+    if play_again == 'Yes':
+      status = 'playing'
+      play_game(original_board, player)
+    else:
+      return status
 
 def render_board(board):
   for item in [board[i:i+6] for i in range(0, len(board), 6)]:
@@ -43,7 +51,6 @@ def evaluate_game(board, player, i):
   global status
   # horizontal across
   if board[1] == player and board[3] == player and board[5] == player:
-    print('h1', board[1], board[3], board[5], player)
     status = player + ' wins!'
   elif board[13] == player and board[15] == player and board[17] == player:
     print('h2')
@@ -69,7 +76,7 @@ def evaluate_game(board, player, i):
     print('d2')
     status = player + ' wins!'
   # tie
-  elif status == 'playing' and i == 9: status = 'Tied game!'
-  print(i)
+  elif status == 'playing' and i == 9:
+    status = 'Tied game!'
 
 play_game(board, 'x')
